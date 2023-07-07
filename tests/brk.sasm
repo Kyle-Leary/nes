@@ -1,0 +1,23 @@
+; the most basic test possible. does it not crash? can we prettyprint?
+.ORG $0000
+	4E 45 53 1A ; NES\1A magic number.
+	01 ; 16kb prg-rom bank
+	01 ; 8kb chr-rom bank
+	00 ; unused controls
+	00 ; unused controls
+	00 ; no 8kb PRG-ROM banks.
+	00 ; more unused control bits
+	00 00 00 00 00 00 ; unused
+
+	; start PRG-ROM, it starts RIGHT AFTER the header
+	; (if there's no trainer in the header)
+
+	FF	; print debug
+	00          ; BRK
+
+.ORG $400E
+	; the reset is mapped directly into the console's RAM at the
+	; final addresses, and we specify it at the end of the PRG-ROM.
+	; we know this is the end, since the header says it's 16kb.
+	00 80	; little endian!
+	00 80
